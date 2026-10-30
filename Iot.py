@@ -1,4 +1,3 @@
-import streamlit as stEnter "help" below or click "Help" above for more information.
 import streamlit as st
 
 # Sahifa konfiguratsiyasi
@@ -25,22 +24,13 @@ st.markdown("""
     .author-badge {
         background-color: #ffffff;
         border: 1px solid #e2e8f0;
-        padding: 8px 16px;
+        padding: 8px 18px;
         border-radius: 9999px;
         display: inline-block;
         font-weight: 600;
         color: #1e293b;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         margin-bottom: 20px;
-    }
-    
-    .metric-card {
-        background-color: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 14px;
-        text-align: center;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -143,7 +133,7 @@ elif menu == "2. Taqqoslash Matritsasi":
     }
     
     st.table(comparison_data)
-    st.warning("⚠️ **Eslatma:** Raspberry Pi GPIO portlariga to'g'ridan-to'g'ri 5V signali berilsa, platadagi SoC chipi kuyadi. Har doim mantiqiy daraja moslagich (Logic Level Shifter) ishlating!")
+    st.warning("⚠️ **Muhim qoida:** Raspberry Pi GPIO pinlariga 5V ulamang, faqat 3.3V darajadagi signallar qabul qilinadi!")
 
 # -----------------------------------------------------------------------------
 # 3-BO'LIM: AMALIYOT VA KODLAR
@@ -198,9 +188,8 @@ while True:
 # -----------------------------------------------------------------------------
 elif menu == "4. 25 Savolli Test":
     st.header("4. 25 Savolli Imtihon Testi")
-    st.caption("Muallif: Quljanova Shukurjon Zaribovna")
+    st.caption("Tuzuvchi: Quljanova Shukurjon Zaribovna")
 
-    # 25 ta savol bazasi
     quiz_data = [
         {"q": "1. Arduino Uno qaysi toifadagi hisoblash qurilmasi hisoblanadi?", "options": ["To'liq bir platalik kompyuter (SBC)", "Mikrokontroller platasi (MCU)", "Grafik tezlatkich (GPU)", "Qattiq disk nazoratchisi"], "correct": 1, "exp": "Arduino Uno — bu ATmega328P mikrokontrolleriga asoslangan bitta chipli boshqaruv platasidir."},
         {"q": "2. Raspberry Pi 4 qurilmasining arxitekturasi qanday?", "options": ["8-bitli Garvard AVR", "16-bitli PIC", "64-bitli ko'p yadroli ARM Cortex-A72", "32-bitli x86 Intel"], "correct": 2, "exp": "Raspberry Pi 4 to'rt yadroli 64-bitli ARM Cortex-A72 protsessoriga ega."},
@@ -229,51 +218,49 @@ elif menu == "4. 25 Savolli Test":
         {"q": "25. Sanoat IoT tizimlarida nima sababdan Arduino va Raspberry Pi birgalikda ishlatiladi?", "options": ["Narxini oshirish uchun", "Arduino real vaqtli sensorlarni xavfsiz o'qiydi, Raspberry Pi esa tahlil qilib bulutga uzatadi", "Biri ishlamasa ikkinchisi o'z-o'zidan yonadi", "Faqat tashqi ko'rinish uchun"], "correct": 1, "exp": "Gibrid arxitekturada mikrokontrollerning real-vaqt kuchi va mini kompyuterning hisoblash quvvati birlashtiriladi."}
     ]
 
-    # Session state
     if "user_answers" not in st.session_state:
         st.session_state.user_answers = {}
 
     correct_count = 0
     answered_count = len(st.session_state.user_answers)
 
-    # Savollarni chiqarish
     for idx, item in enumerate(quiz_data):
         st.markdown(f"**{item['q']}**")
         
-...         choice = st.radio(
-...             "Javob variantini tanlang:",
-...             item["options"],
-...             key=f"q_{idx}",
-...             index=None
-...         )
-... 
-...         if choice is not None:
-...             chosen_idx = item["options"].index(choice)
-...             st.session_state.user_answers[idx] = chosen_idx
-... 
-...             if chosen_idx == item["correct"]:
-...                 st.success(f"To'g'ri javob! {item['exp']}")
-...                 correct_count += 1
-...             else:
-...                 st.error(f"Noto'g'ri! To'g'ri javob: {item['options'][item['correct']]}")
-...                 st.info(f"Izoh: {item['exp']}")
-...         
-...         st.write("")
-... 
-...     # Natija paneli
-...     st.divider()
-...     res_col1, res_col2, res_col3 = st.columns(3)
-...     res_col1.metric("Jami Savollar", 25)
-...     res_col2.metric("Yechilgan", answered_count)
-...     res_col3.metric("To'g'ri Javoblar", correct_count)
-... 
-...     if st.button("Testni Qayta Boshlash"):
-...         st.session_state.user_answers = {}
-...         st.rerun()
-... 
-... # Sahifa pastki qismi
-... st.divider()
-... st.markdown("""
-... <div style='text-align: center; color: #64748b; font-size: 0.85rem;'>
-...     © 2026 Embedded Systems Portali | O'quv metodik majmua muallifi: <strong>Quljanova Shukurjon Zaribovna</strong>
-... </div>
+        choice = st.radio(
+            "Javob variantini tanlang:",
+            item["options"],
+            key=f"q_{idx}",
+            index=None
+        )
+
+        if choice is not None:
+            chosen_idx = item["options"].index(choice)
+            st.session_state.user_answers[idx] = chosen_idx
+
+            if chosen_idx == item["correct"]:
+                st.success(f"To'g'ri javob! {item['exp']}")
+                correct_count += 1
+            else:
+                st.error(f"Noto'g'ri! To'g'ri javob: {item['options'][item['correct']]}")
+                st.info(f"Izoh: {item['exp']}")
+        
+        st.write("")
+
+    st.divider()
+    res_col1, res_col2, res_col3 = st.columns(3)
+    res_col1.metric("Jami Savollar", 25)
+    res_col2.metric("Yechilgan", answered_count)
+    res_col3.metric("To'g'ri Javoblar", correct_count)
+
+    if st.button("Testni Qayta Boshlash"):
+        st.session_state.user_answers = {}
+        st.rerun()
+
+# Pastki qism
+st.divider()
+st.markdown("""
+<div style='text-align: center; color: #64748b; font-size: 0.85rem;'>
+    © 2026 Embedded Systems Portali | O'quv metodik majmua muallifi: <strong>Quljanova Shukurjon Zaribovna</strong>
+</div>
+""", unsafe_allow_html=True)
