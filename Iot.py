@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Sahifa konfiguratsiyasi
+# Sahifa sozlamalari
 st.set_page_config(
     page_title="Arduino vs Raspberry Pi | O'quv Portali",
     page_icon="⚡",
@@ -8,29 +8,58 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Yashil, ko'k, sariq va qizil uyg'unligidagi ochiq fon uchun CSS
+# Yashil, ko'k, sariq va qizil uyg'unligidagi ochiq fon va QORA MATNLAR uchun CSS
 st.markdown("""
 <style>
+    /* Ochiq rangli fon */
     .stApp {
         background-color: #f8fafc;
         background-image: 
-            radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.15) 0px, transparent 50%),
-            radial-gradient(at 0% 100%, rgba(239, 68, 68, 0.12) 0px, transparent 50%);
+            radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.16) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.16) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.16) 0px, transparent 50%),
+            radial-gradient(at 0% 100%, rgba(239, 68, 68, 0.13) 0px, transparent 50%);
         background-attachment: fixed;
     }
     
+    /* BARCHA MATNLARNI TO'LIQ QORA VA ANIQLASHTIRISH */
+    html, body, p, span, label, li {
+        color: #0f172a !important;
+        font-weight: 500 !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: #000000 !important;
+        font-weight: 800 !important;
+    }
+
+    /* Radio tugmalar va variantlar yozuvlari */
+    div[role="radiogroup"] label p {
+        color: #000000 !important;
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+    }
+
+    /* Oq rangli kartalar */
+    .content-box {
+        background-color: rgba(255, 255, 255, 0.95);
+        border: 1px solid #cbd5e1;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+    }
+    
     .author-badge {
-        background-color: #ffffff;
-        border: 1px solid #e2e8f0;
-        padding: 8px 18px;
+        background: #ffffff;
+        border: 2px solid #059669;
+        padding: 10px 24px;
         border-radius: 9999px;
         display: inline-block;
-        font-weight: 600;
-        color: #1e293b;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        margin-bottom: 20px;
+        font-weight: 700;
+        color: #000000 !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+        margin-bottom: 15px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -39,74 +68,106 @@ st.markdown("""
 st.markdown("""
 <div style="text-align: center;">
     <div class="author-badge">
-        👨‍🏫 Tuzuvchi: <span style="color: #059669; font-weight: 700;">Quljanova Shukurjon Zaribovna</span>
+        👨‍🏫 Tuzuvchi: <span style="color: #059669; font-weight: 800;">Quljanova Shukurjon Zaribovna</span>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# Asosiy sarlavha
+# Bosh sarlavha
 st.markdown("""
-<h1 style='text-align: center; color: #0f172a; margin-bottom: 0;'>
-    Arduino Mikrokontrolleri va Raspberry Pi Mini Kompyuterlari
+<h1 style='text-align: center; margin-bottom: 5px;'>
+    ARDUINO MIKROKONTROLLERI VA RASPBERRY PI MINI KOMPYUTERLARI
 </h1>
-<p style='text-align: center; color: #475569; font-size: 1.1rem; margin-top: 8px;'>
+<p style='text-align: center; font-size: 1.2rem; color: #1e293b !important; margin-bottom: 25px;'>
     Funksiyalarini o'rganish, apparat parametrlarini solishtirish va bilimlarni 25 ta test orqali sinash
 </p>
 """, unsafe_allow_html=True)
 
 st.divider()
 
-# Yon panel (Sidebar) navigatsiyasi
+# Chap tarafdagi navigatsiya menyusi
+st.sidebar.title("📌 Menyu")
 menu = st.sidebar.radio(
     "Bo'limni tanlang:",
-    ["1. Nazariya va Tushunchalar", "2. Taqqoslash Matritsasi", "3. Amaliy Laboratoriyalar", "4. 25 Savolli Test"]
+    [
+        "1. Nazariy Tushunchalar & Rasmlar", 
+        "2. Qiyosiy Taqqoslash Matritsasi", 
+        "3. Amaliy Laboratoriya Mashg'ulotlari", 
+        "4. 25 Savolli Imtihon Testi"
+    ]
 )
 
 # -----------------------------------------------------------------------------
-# 1-BO'LIM: NAZARIYA
+# 1-BO'LIM: NAZARIYA VA INTERNET RASMLARI
 # -----------------------------------------------------------------------------
-if menu == "1. Nazariya va Tushunchalar":
-    st.header("1. Fundamental Nazariy Tushunchalar")
+if menu == "1. Nazariy Tushunchalar & Rasmlar":
+    st.header("1. Fundamental Nazariy Tushunchalar va Uskunalar")
     
     col1, col2 = st.columns(2)
     
     with col1:
+        st.markdown('<div class="content-box">', unsafe_allow_html=True)
         st.subheader("🔹 Arduino Uno (Mikrokontroller)")
-        st.info("**Toifasi:** MCU (Microcontroller Unit) | Bare-Metal Tizim")
+        # Internetdan olingan aniq rasm (Arduino Uno Wikimedia)
+        st.image("https://upload.wikimedia.org/wikipedia/commons/3/38/Arduino_Uno_-_R3.jpg", 
+                 caption="Arduino Uno R3 mikrokontroller platasi", use_container_width=True)
+        
         st.markdown("""
-        * **Ichki tuzilishi:** Bitta chipda protsessor yadrosi, tezkor xotira (SRAM), dastur xotirasi (Flash EEPROM) va periferiya bloklari jamlangan.
-        * **Arxitekturasi:** 8-bitli AVR RISC Garvard arxitekturasi (Ma'lumot va ko'rsatmalar shinalari ajratilgan).
-        * **Deterministik ijro:** Operatsion tizim bo'lmagani sababli buyruqlar mikrosekund darajasidagi aniqlik bilan qat'iy ketma-ketlikda bajariladi.
-        * **Energiya sarfi:** O'rtacha 40–50 mA (5V), uyqu rejimida mikroamper sarflaydi.
+        * **Toifasi:** MCU (Microcontroller Unit) — Bare-Metal real-vaqt tizimi.
+        * **Chip:** ATmega328P (8-bitli AVR RISC Garvard arxitekturasi).
+        * **Xotira tuzilishi:** 32 KB Flash xotira (dastur kodi uchun), 2 KB SRAM (operativ xotira) va 1 KB EEPROM.
+        * **Vazifasi:** Datchiklar, rele, servomotorlar va signallarni mikrosekund aniqlikda, kechikishsiz (deterministic) boshqarish.
+        * **Energiya sarfi:** Atigi 40-50 mA; quvvat tejamkor rejimda mikroamper sarflaydi.
         """)
+        st.markdown('</div>', unsafe_allow_html=True)
 
     with col2:
+        st.markdown('<div class="content-box">', unsafe_allow_html=True)
         st.subheader("🔸 Raspberry Pi 4 (Mini Kompyuter)")
-        st.warning("**Toifasi:** SBC (Single Board Computer) | Ko'p vazifali Tizim")
+        # Internetdan olingan aniq rasm (Raspberry Pi 4 Wikimedia)
+        st.image("https://upload.wikimedia.org/wikipedia/commons/f/f1/Raspberry_Pi_4_Model_B_-_Side.jpg", 
+                 caption="Raspberry Pi 4 Model B mini kompyuteri", use_container_width=True)
+        
         st.markdown("""
-        * **Ichki tuzilishi:** To'liq SoC protsessori, gigabaytlab RAM va to'liq Linux operatsion tizimi (Raspberry Pi OS) bilan ishlaydi.
-        * **Arxitekturasi:** 64-bitli ko'p yadroli ARM Cortex-A72 Fon-Neyman arxitekturasi.
-        * **Time-slicing:** Linux operatsion tizimi yadro darajasida jarayonlarni almashtirib turadi, shu sababli millisekundlik kechikishlar yuzaga kelishi mumkin.
-        * **Energiya sarfi:** 600 mA dan 3000 mA gacha (5V / 3A USB-C quvvat manbai talab etiladi).
+        * **Toifasi:** SBC (Single Board Computer) — to'laqonli ko'p vazifali kompyuter.
+        * **Chip:** Broadcom BCM2711, 4 yadroli ARM Cortex-A72 (64-bit Fon-Neyman arxitekturasi).
+        * **Xotira:** 2GB, 4GB yoki 8GB LPDDR4 operativ xotira, MicroSD kartada Linux operatsion tizimi (Raspberry Pi OS).
+        * **Vazifasi:** Video oqimlarni tahlil qilish (OpenCV), sun'iy intellekt modellarini ishga tushirish, veb-server va IoT shlyuzi.
+        * **Energiya sarfi:** 600 mA dan 3000 mA gacha (5V / 3A Type-C quvvat talab qiladi).
         """)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # Arxitektura taqqoslash rasmi
+    st.markdown('<div class="content-box">', unsafe_allow_html=True)
+    st.subheader("Garvard (Arduino) va Fon-Neyman (Raspberry Pi) Arxitekturalari")
+    st.write("Arduino mikrokontrollerida dastur xotirasi (Flash) va ma'lumot xotirasi (RAM) bir-biridan alohida shinalarga ega (Garvard arxitekturasi). Raspberry Pi kompyuterida esa dastur va ma'lumotlar umumiy operativ xotirada joylashadi (Fon-Neyman arxitekturasi).")
+    st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Von_Neumann_Architecture.svg/800px-Von_Neumann_Architecture.svg.png", 
+             caption="Fon-Neyman arxitekturasi: Umumiy xotira va shina tizimi", width=550)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 2-BO'LIM: TAQQOSLASH MATRITSASI
+# 2-BO'LIM: SOLISHTIRUV MATRITSASI
 # -----------------------------------------------------------------------------
-elif menu == "2. Taqqoslash Matritsasi":
+elif menu == "2. Qiyosiy Taqqoslash Matritsasi":
     st.header("2. Qiyosiy Texnik Parametrlar Matritsasi")
     
-    comparison_data = {
+    st.markdown("""
+    <div class="content-box">
+        <h4 style="color:#000000; margin-top:0;">Arduino Uno R3 va Raspberry Pi 4 Model B solishtirmasi</h4>
+    """, unsafe_allow_html=True)
+    
+    comparison_table = {
         "Texnik Xususiyat": [
             "Qurilma toifasi",
             "Markaziy protsessor",
             "Takt chastotasi",
-            "Tezkor xotira (RAM)",
+            "Operativ xotira (RAM)",
             "Doimiy xotira (Storage)",
             "GPIO Mantiqiy Kuchlanishi",
             "Analog kirishlar (ADC)",
             "Operatsion tizim",
-            "Video & Grafika"
+            "Displey chiqishlari",
+            "Asosiy dasturlash tili"
         ],
         "Arduino Uno R3": [
             "Mikrokontroller (MCU)",
@@ -115,41 +176,55 @@ elif menu == "2. Taqqoslash Matritsasi":
             "2 KB SRAM",
             "32 KB Flash",
             "5V mantiqiy daraja",
-            "Mavjud (6 ta 10-bitli ADC kanali)",
-            "Yo'q (Dastur to'g'ridan-to'g'ri ishlaydi)",
-            "Mavjud emas"
+            "Mavjud (6 ta 10-bitli ADC)",
+            "Yo'q (Bare-metal)",
+            "Yo'q",
+            "C / C++ (Arduino IDE)"
         ],
         "Raspberry Pi 4 Model B": [
             "Mini Kompyuter (SBC)",
-            "Broadcom BCM2711, 4-yadro ARM (64-bit)",
+            "Broadcom BCM2711 4-yadro (64-bit)",
             "1.5 GHz – 1.8 GHz",
             "2 GB / 4 GB / 8 GB LPDDR4",
-            "MicroSD karta (16GB – 256GB)",
-            "3.3V (5V berilsa port yonadi!)",
-            "Mavjud emas (Tashqi ADC chip kerak)",
-            "Raspberry Pi OS, Ubuntu",
-            "2x micro-HDMI (4K 60fps)"
+            "MicroSD karta (16GB - 256GB)",
+            "3.3V (5V berilsa port kuyadi!)",
+            "Yo'q (Tashqi chip kerak)",
+            "Linux (Raspberry Pi OS, Ubuntu)",
+            "2x micro-HDMI (4K 60fps)",
+            "Python, Bash, C++, JavaScript"
         ]
     }
     
-    st.table(comparison_data)
-    st.warning("⚠️ **Muhim qoida:** Raspberry Pi GPIO pinlariga 5V ulamang, faqat 3.3V darajadagi signallar qabul qilinadi!")
+    st.table(comparison_table)
+    st.markdown("""
+        <div style="background-color: #fee2e2; border-left: 6px solid #ef4444; padding: 12px; border-radius: 6px; margin-top: 15px;">
+            <strong style="color: #991b1b;">⚠️ OGOHLANTIRISH:</strong> 
+            <span style="color: #7f1d1d;">Raspberry Pi GPIO pinlariga hech qachon 5V kuchlanish bermang! Arduino 5V kuchlanishda, Raspberry Pi esa 3.3V kuchlanishda ishlaydi. Ular birga ulanganda albatta <strong>Logic Level Shifter</strong> (mantiqiy daraja moslagich) ishlatilishi shart.</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 3-BO'LIM: AMALIYOT VA KODLAR
+# 3-BO'LIM: AMALIY LABORATORIYA MASHG'ULOTLARI
 # -----------------------------------------------------------------------------
-elif menu == "3. Amaliy Laboratoriyalar":
-    st.header("3. Amaliy Laboratoriya Mashg'ulotlari")
+elif menu == "3. Amaliy Laboratoriya Mashg'ulotlari":
+    st.header("3. Amaliy Laboratoriya Mashg'ulotlari va Sxemalar")
     
-    tab1, tab2 = st.tabs(["Arduino: Potentsiometr va PWM", "Raspberry Pi: DHT22 Sensori"])
+    lab_tab1, lab_tab2 = st.tabs(["1-Laboratoriya: Arduino PWM", "2-Laboratoriya: Raspberry Pi Sensor"])
     
-    with tab1:
-        st.subheader("Laboratoriya 1: Arduino PWM va Analog Kirish")
-        st.write("A0 analog portidan olingan 10-bitli qiymat D9 pin orqali 8-bitli PWM ga aylantirilib, LED yorug'ligi boshqariladi.")
+    with lab_tab1:
+        st.markdown('<div class="content-box">', unsafe_allow_html=True)
+        st.subheader("Arduino: Analog Potentsiometr va PWM LED")
+        st.write("Ushbu laboratoriyada A0 analog portidan 10-bitli (0–1023) ma'lumot o'qilib, 9-raqamli PWM pin orqali LED yorug'ligi silliq boshqariladi.")
         
+        # Arduino va potentsiometr ulanish sxemasi (Internetdan)
+        st.image("https://docs.arduino.cc/static/a38e8ec43685bc1f6186411dd78a3c89/read-analog-voltage.png", 
+                 caption="Arduino analog kirish va potentsiometr ulanish sxemasi", width=550)
+        
+        st.markdown("**Arduino C++ Dastur Kodi:**")
         st.code("""// Arduino C++ KODI
-const int potPin = A0;
-const int ledPin = 9;
+const int potPin = A0;  // Potentsiometr o'rta oyog'i
+const int ledPin = 9;   // LED anodi (220 Om rezistor orqali)
 
 void setup() {
   pinMode(ledPin, OUTPUT);
@@ -157,21 +232,29 @@ void setup() {
 }
 
 void loop() {
-  int sensorValue = analogRead(potPin); 
-  int pwmValue = map(sensorValue, 0, 1023, 0, 255);
-  analogWrite(ledPin, pwmValue);
+  int sensorValue = analogRead(potPin);          // 0 dan 1023 gacha o'qish
+  int pwmValue = map(sensorValue, 0, 1023, 0, 255); // 0-255 diapazonga o'tkazish
+  analogWrite(ledPin, pwmValue);                 // PWM signal uzatish
   delay(15);
 }""", language="cpp")
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    with tab2:
-        st.subheader("Laboratoriya 2: Raspberry Pi va DHT22 Harorat/Namlik Sensori")
-        st.write("DHT22 datchigi 3.3V kuchlanish orqali GPIO4 piniga ulanadi va Python kutubxonasi yordamida o'qiladi.")
+    with lab_tab2:
+        st.markdown('<div class="content-box">', unsafe_allow_html=True)
+        st.subheader("Raspberry Pi: DHT22 Raqamli Harorat va Namlik Sensori")
+        st.write("DHT22 datchigi 3.3V quvvat va 4-raqamli GPIO piniga ulanadi. Linux muhitida Python yordamida o'qiladi.")
         
+        # Raspberry Pi GPIO pinout xaritasi (Internetdan)
+        st.image("https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png", 
+                 caption="Raspberry Pi 40-pin GPIO xaritasi (Pin 1 = 3.3V, Pin 7 = GPIO4)", width=650)
+        
+        st.markdown("**Python Dastur Kodi:**")
         st.code("""# Python 3 (Raspberry Pi OS)
 import time
 import board
 import adafruit_dht
 
+# GPIO4 piniga ulangan DHT22 sensori
 dht_device = adafruit_dht.DHT22(board.D4)
 
 while True:
@@ -180,15 +263,21 @@ while True:
         humidity = dht_device.humidity
         print(f"Harorat: {temp:.1f}°C | Namlik: {humidity:.1f}%")
     except RuntimeError as err:
+        # Sensor o'qish xatolarini o'tkazib yuborish
         pass
     time.sleep(2.0)""", language="python")
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
 # 4-BO'LIM: 25 TA TEST TIZIMI
 # -----------------------------------------------------------------------------
 elif menu == "4. 25 Savolli Test":
     st.header("4. 25 Savolli Imtihon Testi")
-    st.caption("Tuzuvchi: Quljanova Shukurjon Zaribovna")
+    st.markdown("""
+        <div style="background-color: #f1f5f9; padding: 10px 18px; border-radius: 8px; border-left: 5px solid #059669; margin-bottom: 20px;">
+            <strong style="color: #000;">Test tuzuvchisi:</strong> <span style="color: #059669; font-weight: 800;">Quljanova Shukurjon Zaribovna</span>
+        </div>
+    """, unsafe_allow_html=True)
 
     quiz_data = [
         {"q": "1. Arduino Uno qaysi toifadagi hisoblash qurilmasi hisoblanadi?", "options": ["To'liq bir platalik kompyuter (SBC)", "Mikrokontroller platasi (MCU)", "Grafik tezlatkich (GPU)", "Qattiq disk nazoratchisi"], "correct": 1, "exp": "Arduino Uno — bu ATmega328P mikrokontrolleriga asoslangan bitta chipli boshqaruv platasidir."},
@@ -224,8 +313,10 @@ elif menu == "4. 25 Savolli Test":
     correct_count = 0
     answered_count = len(st.session_state.user_answers)
 
+    # Savollarni chiqarish
     for idx, item in enumerate(quiz_data):
-        st.markdown(f"**{item['q']}**")
+        st.markdown(f'<div class="content-box">', unsafe_allow_html=True)
+        st.markdown(f"### {item['q']}")
         
         choice = st.radio(
             "Javob variantini tanlang:",
@@ -239,28 +330,29 @@ elif menu == "4. 25 Savolli Test":
             st.session_state.user_answers[idx] = chosen_idx
 
             if chosen_idx == item["correct"]:
-                st.success(f"To'g'ri javob! {item['exp']}")
+                st.success(f"✅ To'g'ri javob! {item['exp']}")
                 correct_count += 1
             else:
-                st.error(f"Noto'g'ri! To'g'ri javob: {item['options'][item['correct']]}")
-                st.info(f"Izoh: {item['exp']}")
+                st.error(f"❌ Noto'g'ri! To'g'ri javob: {item['options'][item['correct']]}")
+                st.info(f"💡 Izoh: {item['exp']}")
         
-        st.write("")
+        st.markdown('</div>', unsafe_allow_html=True)
 
+    # Natijalar ko'rsatkichi
     st.divider()
     res_col1, res_col2, res_col3 = st.columns(3)
     res_col1.metric("Jami Savollar", 25)
-    res_col2.metric("Yechilgan", answered_count)
+    res_col2.metric("Javob Berilgan", answered_count)
     res_col3.metric("To'g'ri Javoblar", correct_count)
 
-    if st.button("Testni Qayta Boshlash"):
+    if st.button("🔄 Testni Qayta Boshlash"):
         st.session_state.user_answers = {}
         st.rerun()
 
-# Pastki qism
+# Pastki qism (Footer)
 st.divider()
 st.markdown("""
-<div style='text-align: center; color: #64748b; font-size: 0.85rem;'>
-    © 2026 Embedded Systems Portali | O'quv metodik majmua muallifi: <strong>Quljanova Shukurjon Zaribovna</strong>
+<div style='text-align: center; color: #000000 !important; font-size: 0.95rem; font-weight: 700;'>
+    © 2026 Embedded Systems Portali | O'quv metodik majmua muallifi: <span style="color: #059669;">Quljanova Shukurjon Zaribovna</span>
 </div>
 """, unsafe_allow_html=True)
