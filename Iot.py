@@ -8,7 +8,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# OCH KO'K (Pastel Sky Blue) fon va aniq qora yozuvlar uchun CSS
+# Och ko'k asosiy fon va CHAP TARAFDAGI OCH YASHIL MENYU uchun CSS
 st.markdown("""
 <style>
     /* Butun sahifaning och ko'k foni */
@@ -21,7 +21,27 @@ st.markdown("""
         background-attachment: fixed;
     }
     
-    /* Barcha matnlar to'liq qora va kontrastli */
+    /* CHAP TARAFDAGI MENYU (SIDEBAR) OCH YASHIL FON */
+    section[data-testid="stSidebar"] {
+        background-color: #ecfdf5 !important;
+        background-image: linear-gradient(180deg, #d1fae5 0%, #ecfdf5 100%) !important;
+        border-right: 2px solid #a7f3d0 !important;
+    }
+
+    /* Chap tarafdagi menyu matnlari va sarlavhalari to'liq qora */
+    section[data-testid="stSidebar"] * {
+        color: #064e3b !important;
+        font-weight: 600 !important;
+    }
+    
+    section[data-testid="stSidebar"] h1, 
+    section[data-testid="stSidebar"] h2, 
+    section[data-testid="stSidebar"] h3 {
+        color: #047857 !important;
+        font-weight: 800 !important;
+    }
+    
+    /* Barcha asosiy matnlar to'liq qora va kontrastli */
     html, body, p, span, label, li {
         color: #0f172a !important;
         font-weight: 500 !important;
@@ -39,7 +59,7 @@ st.markdown("""
         font-weight: 600 !important;
     }
 
-    /* Oq shaffof kartalar (Och ko'k fonda aniq ko'rinishi uchun) */
+    /* Oq shaffof kartalar */
     .content-box {
         background-color: rgba(255, 255, 255, 0.96);
         border: 1px solid #bfdbfe;
@@ -84,7 +104,7 @@ st.markdown("""
 
 st.divider()
 
-# Chap tarafdagi navigatsiya menyusi
+# Chap tarafdagi navigatsiya menyusi (Och yashil panel)
 st.sidebar.title("📌 Menyu")
 menu = st.sidebar.radio(
     "Bo'limni tanlang:",
@@ -211,7 +231,7 @@ elif menu == "3. Amaliy Laboratoriya Mashg'ulotlari":
     with lab_tab1:
         st.markdown('<div class="content-box">', unsafe_allow_html=True)
         st.subheader("Arduino: Analog Potentsiometr va PWM LED")
-        st.write("A0 analog portidan 10-bitli (0–1023) ma'lumot o'qilib, 9-raqamli PWM pin orqali LED yorug'ligi silliq boshqariladi.")
+        st.write("Ushbu laboratoriyada A0 analog portidan 10-bitli (0–1023) ma'lumot o'qilib, 9-raqamli PWM pin orqali LED yorug'ligi silliq boshqariladi.")
         
         st.image("https://docs.arduino.cc/static/a38e8ec43685bc1f6186411dd78a3c89/read-analog-voltage.png", 
                  caption="Arduino analog kirish va potentsiometr ulanish sxemasi", width=550)
@@ -262,7 +282,7 @@ while True:
         st.markdown('</div>', unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 4-BO'LIM: 25 TA TEST TIZIMI (HAR XIL TO'G'RI JAVOBLAR: A, B, C, D)
+# 4-BO'LIM: 25 TA TEST TIZIMI
 # -----------------------------------------------------------------------------
 elif menu == "4. 25 Savolli Imtihon Testi":
     st.header("4. 25 Savolli Imtihon Testi")
@@ -272,7 +292,6 @@ elif menu == "4. 25 Savolli Imtihon Testi":
         </div>
     """, unsafe_allow_html=True)
 
-    # 25 ta savol (To'g'ri javoblari: 0=A, 1=B, 2=C, 3=D har xil taqsimlangan)
     quiz_data = [
         {
             "q": "1. Garvard arxitekturasi Fon-Neyman arxitekturasidan nima bilan tubdan farq qiladi?",
@@ -282,7 +301,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Garvard faqat simsiz tarmoqda ishlaydi",
                 "D) Ular o'rtasida apparat darajasida hech qanday farq yo'q"
             ],
-            "correct": 0, # A
+            "correct": 0,
             "exp": "Garvard arxitekturasida dastur xotirasi (Flash) va ma'lumot xotirasi (SRAM) jismonan alohida shinalarga ega bo'ladi."
         },
         {
@@ -293,7 +312,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Alohida grafik tezlatkich (GPU)",
                 "D) Qattiq disk nazoratchisi"
             ],
-            "correct": 1, # B
+            "correct": 1,
             "exp": "Arduino Uno — ATmega328P mikrokontrolleriga asoslangan bitta chipli boshqaruv platasidir."
         },
         {
@@ -304,7 +323,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) 5.0V mantiqiy daraja",
                 "D) 12.0V sanoat standarti"
             ],
-            "correct": 2, # C
+            "correct": 2,
             "exp": "Arduino Uno platasi standart holda 5V mantiqiy sathda (TTL) ishlaydi."
         },
         {
@@ -315,7 +334,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Oddiy 1.5V soat batareyasi",
                 "D) 5V, kamida 3A (15W) USB Type-C manbai"
             ],
-            "correct": 3, # D
+            "correct": 3,
             "exp": "Raspberry Pi 4 to'liq yuklamada barqaror ishlashi uchun 5V / 3A USB-C quvvat manbai talab etiladi."
         },
         {
@@ -326,7 +345,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Har ikkala qurilmaga birdek",
                 "D) Hech biriga xos emas"
             ],
-            "correct": 0, # A
+            "correct": 0,
             "exp": "Arduino operatsion tizimsiz (bare-metal) ishlagani sababli buyruqlarni mikrosekund darajasidagi aniqlik bilan bajaradi."
         },
         {
@@ -337,7 +356,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Hech narsa bo'lmaydi, chunki u 5V ga to'liq chidamli",
                 "D) Faqat operatsion tizim qayta yuklanadi"
             ],
-            "correct": 1, # B
+            "correct": 1,
             "exp": "Raspberry Pi GPIO pinlari faqat 3.3V ga mo'ljallangan. 5V berilsa ichki yarimo'tkazgichlar kuyadi."
         },
         {
@@ -348,7 +367,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) 64-bitli ko'p yadroli ARM Cortex-A72",
                 "D) 32-bitli x86 Intel arxitekturasi"
             ],
-            "correct": 2, # C
+            "correct": 2,
             "exp": "Raspberry Pi 4 to'rt yadroli 64-bitli ARM Cortex-A72 arxitekturasidagi protsessorga ega."
         },
         {
@@ -359,7 +378,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Qattiq magnit diskda",
                 "D) 32 KB li ichki Flash EEPROM xotirasida"
             ],
-            "correct": 3, # D
+            "correct": 3,
             "exp": "Arduino kodi elektr o'chganda ham o'chib ketmaydigan 32 KB Flash xotirada saqlanadi."
         },
         {
@@ -370,7 +389,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Bluetooth 5.4 orqali simsiz",
                 "D) Faqat audio AUX ulagichi"
             ],
-            "correct": 0, # A
+            "correct": 0,
             "exp": "Ular USB kabel orqali UART (Serial) aloqa yordamida juda oson va ishonchli bog'lanadi."
         },
         {
@@ -381,7 +400,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) 14 ta raqamli kanal",
                 "D) Analog kanal mavjud emas"
             ],
-            "correct": 1, # B
+            "correct": 1,
             "exp": "Arduino Uno platasida A0 dan A5 gacha belgilangan 6 ta 10-bitli ADC kanali mavjud."
         },
         {
@@ -392,7 +411,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) 2 GB, 4 GB yoki 8 GB LPDDR4",
                 "D) 128 MB SDRAM"
             ],
-            "correct": 2, # C
+            "correct": 2,
             "exp": "Raspberry Pi 4 xaridor ehtiyojiga qarab 2GB, 4GB yoki 8GB operativ xotira bilan ishlab chiqariladi."
         },
         {
@@ -403,7 +422,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Butun plata darhol portlab ketadi",
                 "D) MicroSD kartadagi operatsion tizim fayllari buziladi (corruption)"
             ],
-            "correct": 3, # D
+            "correct": 3,
             "exp": "Linux doimiy yozuv amallarini bajargani sababli to'satdan uzilish MicroSD tizim fayllarini ishdan chiqarishi mumkin."
         },
         {
@@ -414,7 +433,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) 100 MHz",
                 "D) 500 kHz"
             ],
-            "correct": 0, # A
+            "correct": 0,
             "exp": "Arduino Uno 16 megagersli (16 MHz) kvars rezonatori orqali taktlanadi."
         },
         {
@@ -425,7 +444,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Ha, barcha 40 ta pin analog ishlay oladi",
                 "D) Ha, faqat GPIO 2 va GPIO 3 analog ishlaydi"
             ],
-            "correct": 1, # B
+            "correct": 1,
             "exp": "Raspberry Pi platasida ichki ADC yo'q. Analog sensorlar uchun MCP3008 yoki ADS1115 kabi chiplar ulanadi."
         },
         {
@@ -436,7 +455,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) 0 dan 1023 gacha (10-bitli ADC)",
                 "D) 0 dan 65535 gacha (16-bit)"
             ],
-            "correct": 2, # C
+            "correct": 2,
             "exp": "Arduino Uno ADC moduli 10-bitli bo'lib, 0V dan 5V gacha kuchlanishni 0 dan 1023 gacha bo'lgan sonlarga aylantiradi."
         },
         {
@@ -447,7 +466,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) PIC16F877A mikrokontrolleri",
                 "D) Raspberry Pi 4 (SBC)"
             ],
-            "correct": 3, # D
+            "correct": 3,
             "exp": "OpenCV, video oqimni qayta ishlash va neyron tarmoqlar yuqori protsessor quvvati va katta RAM talab qiladi."
         },
         {
@@ -458,7 +477,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) 14 ta barcha raqamli pinlar",
                 "D) PWM pini umuman yo'q"
             ],
-            "correct": 0, # A
+            "correct": 0,
             "exp": "Arduino Uno'da yonida tilda (~) belgisi qo'yilgan 6 ta pin apparat PWM funksiyasini bajaradi."
         },
         {
@@ -469,7 +488,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Chunki mikrokontrollerda quvvat juda yuqori bo'ladi",
                 "D) Chunki Arduino faqat 220 voltda ishlaydi"
             ],
-            "correct": 1, # B
+            "correct": 1,
             "exp": "Linux OS o'z jarayonlarini vaqt bo'yicha almashtirib turadi, bu esa millisekundlik noaniqliklarni keltirib chiqaradi."
         },
         {
@@ -480,7 +499,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) C / C++",
                 "D) HTML / CSS"
             ],
-            "correct": 2, # C
+            "correct": 2,
             "exp": "Arduino dasturlash tili C/C++ tillari bazasida soddalashtirilgan kutubxonalar bilan yaratilgan."
         },
         {
@@ -491,7 +510,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Faqat elektr tokini tejash maqsadida",
                 "D) Arduino sensorlarni qat'iy vaqtda o'qiydi, Raspberry Pi esa bulutga tahliliy uzatadi"
             ],
-            "correct": 3, # D
+            "correct": 3,
             "exp": "Gibrid arxitekturada mikrokontrollerning deterministik xususiyati va mini kompyuterning hisoblash quvvati birlashadi."
         },
         {
@@ -502,7 +521,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Displey umuman ulab bo'lmaydi",
                 "D) 6 ta HDMI monitor"
             ],
-            "correct": 0, # A
+            "correct": 0,
             "exp": "Raspberry Pi 4 ikkita micro-HDMI porti orqali 4K formatdagi ikkita monitorni mustaqil boshqara oladi."
         },
         {
@@ -513,7 +532,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) PCI Express slot",
                 "D) USB Header"
             ],
-            "correct": 1, # B
+            "correct": 1,
             "exp": "Raspberry Pi platasining barcha tashqi ulanish pinlari guruhi 40-pin GPIO Header deb ataladi."
         },
         {
@@ -524,7 +543,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Yangi dastur kodini USB kabel orqali Flash xotiraga yozishni ta'minlash",
                 "D) Kuchlanishni 5V dan 220V ga ko'tarish"
             ],
-            "correct": 2, # C
+            "correct": 2,
             "exp": "Bootloader tashqi dasturlagichsiz yangi dasturni USB orqali mikrokontroller xotirasiga yozish imkonini beradi."
         },
         {
@@ -535,7 +554,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Uy serveri",
                 "D) Arduino Uno (quvvat tejash / Sleep rejimida)"
             ],
-            "correct": 3, # D
+            "correct": 3,
             "exp": "Arduino uyqu rejimida atigi bir necha mikroamper tok sarflab, kichik batareyada bir necha oy ishlay oladi."
         },
         {
@@ -546,7 +565,7 @@ elif menu == "4. 25 Savolli Imtihon Testi":
                 "C) Faqat internet bulutidan",
                 "D) Protsessor ichidagi keshdan"
             ],
-            "correct": 0, # A
+            "correct": 0,
             "exp": "Raspberry Pi bootloader orqali o'z tizimini MicroSD yoki USB orqali ulangan SSD diskdan yuklaydi."
         }
     ]
